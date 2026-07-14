@@ -71,10 +71,24 @@ class VisitorRegistrationForm extends Component
 
     public function submit(RegisterVisitorService $service)
     {
+        $data = $this->all();
+
+        $data['born_again'] = (bool) ($data['born_again'] ?? false);
+        $data['wants_membership'] = (bool) ($data['wants_membership'] ?? false);
+        $data['wants_counsel'] = (bool) ($data['wants_counsel'] ?? false);
+        $data['is_baptized'] = (bool) ($data['is_baptized'] ?? false);
+
         $validated = $this->validate(
             StoreVisitorRegistrationRequest::validationRules(),
             StoreVisitorRegistrationRequest::validationMessages()
         );
+
+        $validated = array_merge($validated, [
+            'born_again' => $data['born_again'],
+            'wants_membership' => $data['wants_membership'],
+            'wants_counsel' => $data['wants_counsel'],
+            'is_baptized' => $data['is_baptized'],
+        ]);
 
         $registration = $service->register(
             qrCode: $this->qrCode,

@@ -93,43 +93,35 @@
                     <x-form.input label="Inviter Name" name="invited_by_name" wire:model.blur="invited_by_name" placeholder="Name of the person who invited you" />
                 </div>
 
-                <div class="grid gap-3 sm:grid-cols-2">
-                    <x-form.checkbox-card
-                        name="born_again"
-                        wire:model="born_again"
-                        title="Are you born again?"
-                        description="Select this if you have received Jesus Christ as Lord and Saviour."
-                    />
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <x-form.select label="Are you born again?" name="born_again" wire:model.live="born_again">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </x-form.select>
 
-                    <x-form.checkbox-card
-                        name="wants_membership"
-                        wire:model="wants_membership"
-                        title="Would you like to be a member?"
-                        description="Our team will guide you through the membership process."
-                    />
+                    <x-form.select label="Would you like to be a member?" name="wants_membership" wire:model="wants_membership">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </x-form.select>
                 </div>
 
                 @if ($born_again)
-                    <x-form.input label="If yes, when?" name="born_again_when" type="date" wire:model.blur="born_again_when" />
+                    <x-form.input label="If yes, when were you born again?" name="born_again_when" type="date" wire:model.blur="born_again_when" />
                 @endif
 
-                <div class="grid gap-3 sm:grid-cols-2">
-                    <x-form.checkbox-card
-                        name="wants_counsel"
-                        wire:model="wants_counsel"
-                        title="Do you want us to pray or counsel you?"
-                        description="Select this if you would like pastoral support."
-                    />
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <x-form.select label="Do you want counseling?" name="wants_counsel" wire:model="wants_counsel">
+                        <option value="0">No</option>
+                        <option value="1">Yes</option>
+                    </x-form.select>
 
                     <x-form.input label="When can we visit you?" name="preferred_visit_date" type="date" wire:model.blur="preferred_visit_date" />
                 </div>
 
-                <x-form.checkbox-card
-                    name="is_baptized"
-                    wire:model="is_baptized"
-                    title="Are you baptized?"
-                    description="Select this if you have received baptism."
-                />
+                <x-form.select label="Are you baptized?" name="is_baptized" wire:model="is_baptized">
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </x-form.select>
 
                 <x-form.textarea
                     label="Prayer Request"
