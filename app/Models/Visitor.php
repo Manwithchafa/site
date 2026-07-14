@@ -15,16 +15,29 @@ class Visitor extends Model
         'church_id',
         'first_name',
         'last_name',
+        'sex',
+        'age',
+        'marital_status',
+        'wedding_anniversary',
         'gender',
         'date_of_birth',
         'phone',
         'email',
+        'city',
         'address',
+        'residential_address',
+        'business_address',
         'nearest_bus_stop',
         'occupation',
         'invited_by',
+        'invited_by_name',
+        'invited_by_phone',
         'born_again',
+        'born_again_when',
+        'is_baptized',
         'wants_membership',
+        'wants_counsel',
+        'preferred_visit_date',
         'status',
     ];
 
@@ -32,8 +45,14 @@ class Visitor extends Model
     {
         return [
             'date_of_birth' => 'date',
+            'wedding_anniversary' => 'date',
+            'born_again_when' => 'date',
+            'preferred_visit_date' => 'date',
             'born_again' => 'boolean',
+            'is_baptized' => 'boolean',
             'wants_membership' => 'boolean',
+            'wants_counsel' => 'boolean',
+            'age' => 'integer',
         ];
     }
 

@@ -14,39 +14,57 @@ class StoreVisitorRegistrationRequest extends FormRequest
 
     public function rules(): array
     {
-        return self::validationRules();
+        return $this->validationRules();
     }
 
-    public static function validationRules(): array
+    protected function validationRules(): array
     {
         return [
             'first_name' => ['required', 'string', 'max:80'],
             'last_name' => ['required', 'string', 'max:80'],
-            'gender' => ['required', Rule::in(['female', 'male'])],
+            'sex' => ['nullable', Rule::in(['female', 'male'])],
+            'age' => ['nullable', 'integer', 'min:1', 'max:120'],
+            'marital_status' => ['nullable', 'string', 'max:40'],
+            'wedding_anniversary' => ['nullable', 'date', 'before_or_equal:today'],
+            'gender' => ['nullable', Rule::in(['female', 'male'])],
             'date_of_birth' => ['nullable', 'date', 'before:today'],
             'phone' => ['required', 'string', 'max:30', 'regex:/^[0-9+\-\s()]{7,30}$/'],
             'email' => ['nullable', 'email:rfc', 'max:255'],
+            'city' => ['nullable', 'string', 'max:120'],
             'address' => ['nullable', 'string', 'max:500'],
+            'residential_address' => ['nullable', 'string', 'max:500'],
+            'business_address' => ['nullable', 'string', 'max:500'],
             'nearest_bus_stop' => ['nullable', 'string', 'max:120'],
             'occupation' => ['nullable', 'string', 'max:120'],
             'invited_by' => ['nullable', 'string', 'max:160'],
+            'invited_by_name' => ['nullable', 'string', 'max:160'],
+            'invited_by_phone' => ['nullable', 'string', 'max:30', 'regex:/^[0-9+\-\s()]{7,30}$/'],
             'born_again' => ['boolean'],
+            'born_again_when' => ['nullable', 'date', 'before_or_equal:today'],
+            'is_baptized' => ['boolean'],
             'wants_membership' => ['boolean'],
+            'wants_counsel' => ['boolean'],
+            'preferred_visit_date' => ['nullable', 'date', 'after_or_equal:today'],
             'prayer_request' => ['nullable', 'string', 'max:2000'],
         ];
     }
 
     public function messages(): array
     {
-        return self::validationMessages();
+        return $this->validationMessages();
     }
 
-    public static function validationMessages(): array
+    protected function validationMessages(): array
     {
         return [
             'phone.regex' => 'Enter a valid phone number.',
+            'invited_by_phone.regex' => 'Enter a valid phone number.',
             'gender.in' => 'Select a valid gender.',
+            'sex.in' => 'Select a valid sex.',
             'date_of_birth.before' => 'Date of birth must be before today.',
+            'wedding_anniversary.before_or_equal' => 'Wedding anniversary must be today or earlier.',
+            'born_again_when.before_or_equal' => 'The born again date must be today or earlier.',
+            'preferred_visit_date.after_or_equal' => 'Preferred visit date must be today or later.',
         ];
     }
 }

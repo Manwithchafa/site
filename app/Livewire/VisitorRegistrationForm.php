@@ -16,6 +16,14 @@ class VisitorRegistrationForm extends Component
 
     public string $last_name = '';
 
+    public string $sex = '';
+
+    public ?int $age = null;
+
+    public ?string $marital_status = null;
+
+    public ?string $wedding_anniversary = null;
+
     public string $gender = '';
 
     public ?string $date_of_birth = null;
@@ -24,7 +32,13 @@ class VisitorRegistrationForm extends Component
 
     public ?string $email = null;
 
+    public ?string $city = null;
+
     public ?string $address = null;
+
+    public ?string $residential_address = null;
+
+    public ?string $business_address = null;
 
     public ?string $nearest_bus_stop = null;
 
@@ -32,9 +46,21 @@ class VisitorRegistrationForm extends Component
 
     public ?string $invited_by = null;
 
+    public ?string $invited_by_name = null;
+
+    public ?string $invited_by_phone = null;
+
     public bool $born_again = false;
 
+    public ?string $born_again_when = null;
+
+    public bool $is_baptized = false;
+
     public bool $wants_membership = false;
+
+    public bool $wants_counsel = false;
+
+    public ?string $preferred_visit_date = null;
 
     public ?string $prayer_request = null;
 
