@@ -31,6 +31,53 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
             ->assertSee('If yes, when were you born again?');
     }
 
+    public function test_registration_form_submits_with_yes_no_fields(): void
+    {
+        $qrCode = $this->createQrCode();
+
+        Livewire::test(VisitorRegistrationForm::class, ['qrCode' => $qrCode])
+            ->set('first_name', 'Ada')
+            ->set('last_name', 'Okafor')
+            ->set('sex', 'female')
+            ->set('phone', '+2348123456789')
+            ->set('born_again', '1')
+            ->set('born_again_when', '2021-01-01')
+            ->set('wants_membership', '1')
+            ->set('wants_counsel', '1')
+            ->set('is_baptized', '1')
+            ->call('submit')
+            ->assertHasNoErrors()
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('visitors', [
+            'first_name' => 'Ada',
+            'last_name' => 'Okafor',
+            'born_again' => true,
+            'wants_membership' => true,
+            'wants_counsel' => true,
+            'is_baptized' => true,
+        ]);
+    }
+
+    public function test_registration_success_page_renders_after_submission(): void
+    {
+        $qrCode = $this->createQrCode();
+
+        $registration = app(RegisterVisitorService::class)->register($qrCode, [
+            'first_name' => 'Ada',
+            'last_name' => 'Okafor',
+            'phone' => '+2348123456789',
+            'born_again' => true,
+            'wants_membership' => true,
+            'wants_counsel' => true,
+            'is_baptized' => true,
+        ]);
+
+        $this->get(route('visitor-registration.success', $registration))
+            ->assertOk()
+            ->assertSee('Registration successful');
+    }
+
     public function test_it_persists_extended_profile_fields_for_a_visitor_registration(): void
     {
         $qrCode = $this->createQrCode();
