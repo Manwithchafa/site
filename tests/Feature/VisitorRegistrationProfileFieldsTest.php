@@ -2,61 +2,27 @@
 
 namespace Tests\Feature;
 
-use App\Livewire\VisitorRegistrationForm;
 use App\Models\Church;
 use App\Models\ChurchService;
 use App\Models\QrCode;
 use App\Services\Visitors\RegisterVisitorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Livewire\Livewire;
 use Tests\TestCase;
 
 class VisitorRegistrationProfileFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_yes_no_fields_keep_selected_yes_state(): void
+    public function test_registration_form_renders_as_native_post_form(): void
     {
         $qrCode = $this->createQrCode();
 
-        Livewire::test(VisitorRegistrationForm::class, ['qrCode' => $qrCode])
-            ->set('born_again', '1')
-            ->set('wants_membership', '1')
-            ->set('wants_counsel', '1')
-            ->set('is_baptized', '1')
-            ->assertSet('born_again', '1')
-            ->assertSet('wants_membership', '1')
-            ->assertSet('wants_counsel', '1')
-            ->assertSet('is_baptized', '1')
-            ->assertSee('If yes, when were you born again?');
-    }
-
-    public function test_registration_form_submits_with_yes_no_fields(): void
-    {
-        $qrCode = $this->createQrCode();
-
-        Livewire::test(VisitorRegistrationForm::class, ['qrCode' => $qrCode])
-            ->set('first_name', 'Ada')
-            ->set('last_name', 'Okafor')
-            ->set('sex', 'female')
-            ->set('phone', '+2348123456789')
-            ->set('born_again', '1')
-            ->set('born_again_when', '2021-01-01')
-            ->set('wants_membership', '1')
-            ->set('wants_counsel', '1')
-            ->set('is_baptized', '1')
-            ->call('submit')
-            ->assertHasNoErrors()
-            ->assertRedirect();
-
-        $this->assertDatabaseHas('visitors', [
-            'first_name' => 'Ada',
-            'last_name' => 'Okafor',
-            'born_again' => true,
-            'wants_membership' => true,
-            'wants_counsel' => true,
-            'is_baptized' => true,
-        ]);
+        $this->get(route('visitor-registration.create', $qrCode->code))
+            ->assertOk()
+            ->assertSee('method="POST"', false)
+            ->assertSee(route('visitor-registration.store', $qrCode->code), false)
+            ->assertDontSee('wire:model', false)
+            ->assertDontSee('wire:submit', false);
     }
 
     public function test_registration_success_page_renders_after_submission(): void

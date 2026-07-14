@@ -13,6 +13,7 @@
     </span>
     <select
         name="{{ $name }}"
+        data-old-value="{{ old($name) }}"
         {{ $attributes->merge(['class' => 'mt-2 block w-full rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-base text-slate-950 shadow-sm outline-none transition focus:border-[#162b75] focus:ring-4 focus:ring-[#162b75]/10']) }}
     >
         {{ $slot }}
