@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 use App\Observers\AuditableObserver;
 use App\Models\Visitor;
 use App\Models\FollowUp;
@@ -46,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
             View::share('currentChurch', $currentChurch);
         } catch (\Throwable $e) {
             // Non-fatal — ensure app still boots
+        }
+
+        if ($this->app->environment('production') || request()->isSecure()) {
+            URL::forceScheme('https');
         }
     }
 }
