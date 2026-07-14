@@ -78,6 +78,34 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
             ->assertSee('Registration successful');
     }
 
+    public function test_registration_form_accepts_native_post_fallback(): void
+    {
+        $qrCode = $this->createQrCode();
+
+        $response = $this->post(route('visitor-registration.store', $qrCode->code), [
+            'first_name' => 'Ada',
+            'last_name' => 'Okafor',
+            'sex' => 'female',
+            'phone' => '+2348123456789',
+            'born_again' => '1',
+            'born_again_when' => '2021-01-01',
+            'wants_membership' => '1',
+            'wants_counsel' => '1',
+            'is_baptized' => '1',
+        ]);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseHas('visitors', [
+            'first_name' => 'Ada',
+            'last_name' => 'Okafor',
+            'born_again' => true,
+            'wants_membership' => true,
+            'wants_counsel' => true,
+            'is_baptized' => true,
+        ]);
+    }
+
     public function test_it_persists_extended_profile_fields_for_a_visitor_registration(): void
     {
         $qrCode = $this->createQrCode();

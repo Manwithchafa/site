@@ -30,7 +30,8 @@
     </aside>
 
     <x-ui.card class="overflow-hidden">
-        <form wire:submit="submit" class="space-y-6 px-5 py-6 sm:px-8 sm:py-8">
+        <form method="POST" action="{{ route('visitor-registration.store', $qrCode->code) }}" wire:submit="submit" class="space-y-6 px-5 py-6 sm:px-8 sm:py-8">
+            @csrf
             <section class="space-y-4 rounded-2xl border border-slate-100 bg-slate-50/70 p-5 sm:p-6">
                 <div>
                     <h2 class="text-base font-bold text-slate-950">Personal information</h2>
