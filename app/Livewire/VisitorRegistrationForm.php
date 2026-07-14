@@ -24,8 +24,6 @@ class VisitorRegistrationForm extends Component
 
     public ?string $wedding_anniversary = null;
 
-    public string $gender = '';
-
     public ?string $date_of_birth = null;
 
     public string $phone = '';
@@ -33,8 +31,6 @@ class VisitorRegistrationForm extends Component
     public ?string $email = null;
 
     public ?string $city = null;
-
-    public ?string $address = null;
 
     public ?string $residential_address = null;
 
@@ -105,3 +101,4 @@ class VisitorRegistrationForm extends Component
         return view('livewire.visitor-registration-form');
     }
 }
+
