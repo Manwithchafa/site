@@ -85,12 +85,12 @@ class DashboardStatsService
     public function genderDistribution(): array
     {
         return Visitor::query()
-            ->select('gender', DB::raw('count(*) as aggregate'))
-            ->groupBy('gender')
-            ->orderBy('gender')
+            ->select('sex', DB::raw('count(*) as aggregate'))
+            ->groupBy('sex')
+            ->orderBy('sex')
             ->get()
             ->map(fn ($row) => [
-                'label' => ucfirst($row->gender),
+                'label' => $row->sex ? ucfirst($row->sex) : 'Unknown',
                 'value' => (int) $row->aggregate,
             ])
             ->values()
@@ -182,3 +182,4 @@ class DashboardStatsService
         ];
     }
 }
+
