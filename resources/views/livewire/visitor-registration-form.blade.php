@@ -94,12 +94,12 @@
                 </div>
 
                 <div class="grid gap-4 sm:grid-cols-2">
-                    <x-form.select label="Are you born again?" name="born_again" wire:model.live.boolean="born_again">
+                    <x-form.select label="Would you like to be a member?" name="wants_membership" wire:model.live.boolean="wants_membership">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </x-form.select>
 
-                    <x-form.select label="Would you like to be a member?" name="wants_membership" wire:model.live.boolean="wants_membership">
+                    <x-form.select label="Are you born again?" name="born_again" wire:model.live.boolean="born_again">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </x-form.select>
