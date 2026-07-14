@@ -109,7 +109,9 @@
                     />
                 </div>
 
-                <x-form.input label="When" name="born_again_when" type="date" wire:model.blur="born_again_when" />
+                @if ($born_again)
+                    <x-form.input label="If yes, when?" name="born_again_when" type="date" wire:model.blur="born_again_when" />
+                @endif
 
                 <div class="grid gap-3 sm:grid-cols-2">
                     <x-form.checkbox-card
