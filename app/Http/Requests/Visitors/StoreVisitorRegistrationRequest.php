@@ -14,10 +14,10 @@ class StoreVisitorRegistrationRequest extends FormRequest
 
     public function rules(): array
     {
-        return $this->validationRules();
+        return self::visitorRegistrationRules();
     }
 
-    protected function validationRules(): array
+    public static function visitorRegistrationRules(): array
     {
         return [
             'first_name' => ['required', 'string', 'max:80'],
@@ -51,10 +51,10 @@ class StoreVisitorRegistrationRequest extends FormRequest
 
     public function messages(): array
     {
-        return $this->validationMessages();
+        return self::visitorRegistrationMessages();
     }
 
-    protected function validationMessages(): array
+    public static function visitorRegistrationMessages(): array
     {
         return [
             'phone.regex' => 'Enter a valid phone number.',

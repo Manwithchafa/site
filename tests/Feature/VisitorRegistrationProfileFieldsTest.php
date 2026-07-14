@@ -2,46 +2,38 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\VisitorRegistrationForm;
 use App\Models\Church;
 use App\Models\ChurchService;
 use App\Models\QrCode;
 use App\Services\Visitors\RegisterVisitorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class VisitorRegistrationProfileFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_yes_no_fields_keep_selected_yes_state(): void
+    {
+        $qrCode = $this->createQrCode();
+
+        Livewire::test(VisitorRegistrationForm::class, ['qrCode' => $qrCode])
+            ->set('born_again', '1')
+            ->set('wants_membership', '1')
+            ->set('wants_counsel', '1')
+            ->set('is_baptized', '1')
+            ->assertSet('born_again', '1')
+            ->assertSet('wants_membership', '1')
+            ->assertSet('wants_counsel', '1')
+            ->assertSet('is_baptized', '1')
+            ->assertSee('If yes, when were you born again?');
+    }
+
     public function test_it_persists_extended_profile_fields_for_a_visitor_registration(): void
     {
-        $church = Church::create([
-            'name' => 'Christ Embassy Test',
-            'slug' => 'christ-embassy-test',
-            'code' => 'CET',
-            'email' => 'hello@example.com',
-            'phone' => '+2348000000000',
-            'address' => 'Test address',
-            'city' => 'Lagos',
-            'state' => 'Lagos',
-            'country' => 'NG',
-            'status' => 'active',
-        ]);
-
-        $service = ChurchService::create([
-            'church_id' => $church->id,
-            'name' => 'Sunday Service',
-            'slug' => 'sunday-service',
-            'status' => 'active',
-        ]);
-
-        $qrCode = QrCode::create([
-            'church_id' => $church->id,
-            'church_service_id' => $service->id,
-            'code' => 'welcome-service',
-            'label' => 'Welcome Service',
-            'status' => 'active',
-        ]);
+        $qrCode = $this->createQrCode();
 
         $registration = app(RegisterVisitorService::class)->register($qrCode, [
             'first_name' => 'Ada',
@@ -82,5 +74,36 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
         $this->assertSame('2021-01-01', $visitor->born_again_when->toDateString());
         $this->assertTrue($visitor->wants_counsel);
         $this->assertSame('2026-07-20', $visitor->preferred_visit_date->toDateString());
+    }
+
+    private function createQrCode(): QrCode
+    {
+        $church = Church::create([
+            'name' => 'Christ Embassy Test',
+            'slug' => 'christ-embassy-test',
+            'code' => 'CET',
+            'email' => 'hello@example.com',
+            'phone' => '+2348000000000',
+            'address' => 'Test address',
+            'city' => 'Lagos',
+            'state' => 'Lagos',
+            'country' => 'NG',
+            'status' => 'active',
+        ]);
+
+        $service = ChurchService::create([
+            'church_id' => $church->id,
+            'name' => 'Sunday Service',
+            'slug' => 'sunday-service',
+            'status' => 'active',
+        ]);
+
+        return QrCode::create([
+            'church_id' => $church->id,
+            'church_service_id' => $service->id,
+            'code' => 'welcome-service',
+            'label' => 'Welcome Service',
+            'status' => 'active',
+        ]);
     }
 }

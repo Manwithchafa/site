@@ -50,15 +50,15 @@ class VisitorRegistrationForm extends Component
 
     public ?string $invited_by_phone = null;
 
-    public bool $born_again = false;
+    public string $born_again = '0';
 
     public ?string $born_again_when = null;
 
-    public bool $is_baptized = false;
+    public string $is_baptized = '0';
 
-    public bool $wants_membership = false;
+    public string $wants_membership = '0';
 
-    public bool $wants_counsel = false;
+    public string $wants_counsel = '0';
 
     public ?string $preferred_visit_date = null;
 
@@ -73,14 +73,14 @@ class VisitorRegistrationForm extends Component
     {
         $data = $this->all();
 
-        $data['born_again'] = (bool) ($data['born_again'] ?? false);
-        $data['wants_membership'] = (bool) ($data['wants_membership'] ?? false);
-        $data['wants_counsel'] = (bool) ($data['wants_counsel'] ?? false);
-        $data['is_baptized'] = (bool) ($data['is_baptized'] ?? false);
+        $data['born_again'] = $data['born_again'] === '1';
+        $data['wants_membership'] = $data['wants_membership'] === '1';
+        $data['wants_counsel'] = $data['wants_counsel'] === '1';
+        $data['is_baptized'] = $data['is_baptized'] === '1';
 
         $validated = $this->validate(
-            StoreVisitorRegistrationRequest::validationRules(),
-            StoreVisitorRegistrationRequest::validationMessages()
+            StoreVisitorRegistrationRequest::visitorRegistrationRules(),
+            StoreVisitorRegistrationRequest::visitorRegistrationMessages()
         );
 
         $validated = array_merge($validated, [

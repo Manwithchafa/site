@@ -94,23 +94,23 @@
                 </div>
 
                 <div class="grid gap-4 sm:grid-cols-2">
-                    <x-form.select label="Would you like to be a member?" name="wants_membership" wire:model.live.boolean="wants_membership">
+                    <x-form.select label="Would you like to be a member?" name="wants_membership" wire:model.live="wants_membership">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </x-form.select>
 
-                    <x-form.select label="Are you born again?" name="born_again" wire:model.live.boolean="born_again">
+                    <x-form.select label="Are you born again?" name="born_again" wire:model.live="born_again">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </x-form.select>
                 </div>
 
-                @if ($born_again)
+                @if ($born_again === '1')
                     <x-form.input label="If yes, when were you born again?" name="born_again_when" type="date" wire:model.blur="born_again_when" />
                 @endif
 
                 <div class="grid gap-4 sm:grid-cols-2">
-                    <x-form.select label="Do you want counseling?" name="wants_counsel" wire:model.live.boolean="wants_counsel">
+                    <x-form.select label="Do you want counseling?" name="wants_counsel" wire:model.live="wants_counsel">
                         <option value="0">No</option>
                         <option value="1">Yes</option>
                     </x-form.select>
@@ -118,7 +118,7 @@
                     <x-form.input label="When can we visit you?" name="preferred_visit_date" type="date" wire:model.blur="preferred_visit_date" />
                 </div>
 
-                <x-form.select label="Are you baptized?" name="is_baptized" wire:model.live.boolean="is_baptized">
+                <x-form.select label="Are you baptized?" name="is_baptized" wire:model.live="is_baptized">
                     <option value="0">No</option>
                     <option value="1">Yes</option>
                 </x-form.select>
