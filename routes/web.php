@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\VisitorExportController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Public\QrCodeController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Livewire\Admin\DashboardHome;
 use App\Livewire\Admin\VisitorIndex;
@@ -21,6 +22,9 @@ Route::post('/qr/{code}', [VisitorRegistrationController::class, 'store'])
 
 Route::get('/registration/success/{registration:public_uuid}', [VisitorRegistrationController::class, 'success'])
     ->name('visitor-registration.success');
+
+Route::get('/qr-code/{code}', [QrCodeController::class, 'show'])
+    ->name('qr-code.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');

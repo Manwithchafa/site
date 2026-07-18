@@ -32,7 +32,6 @@ class StoreVisitorRegistrationRequest extends FormRequest
             'city' => ['nullable', 'string', 'max:120'],
             'residential_address' => ['nullable', 'string', 'max:500'],
             'business_address' => ['nullable', 'string', 'max:500'],
-            'business_address' => ['nullable', 'string', 'max:500'],
             'nearest_bus_stop' => ['nullable', 'string', 'max:120'],
             'occupation' => ['nullable', 'string', 'max:120'],
             'invited_by' => ['nullable', 'string', 'max:160'],

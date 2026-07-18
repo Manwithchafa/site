@@ -1,0 +1,127 @@
+{
+  "diagnosticsExclude": [
+    "**/node_modules",
+    "**/vendor"
+  ],
+  "stubs": [
+    "apache",
+    "bcmath",
+    "bz2",
+    "calendar",
+    "ctype",
+    "curl",
+    "date",
+    "dba",
+    "dom",
+    "enchant",
+    "exif",
+    "fileinfo",
+    "filter",
+    "ftp",
+    "gd",
+    "gettext",
+    "gmp",
+    "hash",
+    "iconv",
+    "imap",
+    "intl",
+    "json",
+    "ldap",
+    "libxml",
+    "mbstring",
+    "mcrypt",
+    "mysql",
+    "mysqli",
+    "odbc",
+    "openssl",
+    "pcntl",
+    "pcre",
+    "pdo",
+    "pgsql",
+    "phar",
+    "posix",
+    "pspell",
+    "readline",
+    "reflection",
+    "regex",
+    "session",
+    "shmop",
+    "simplexml",
+    "snmp",
+    "soap",
+    "sockets",
+    "sodium",
+    "spl",
+    "sqlite3",
+    "sqlsrv",
+    "ssh2",
+    "standard",
+    "statistics",
+    "strptime",
+    "sysvmsg",
+    "sysvsem",
+    "sysvshm",
+    "tidy",
+    "tokenizer",
+    "uopz",
+    "url",
+    "user_defined_functions",
+    "uuencoding",
+    "uuid",
+    "var",
+    "varinfo",
+    "wddx",
+    "xml",
+    "xmlreader",
+    "xmlrpc",
+    "xmlwriter",
+    "xsl",
+    "yaf",
+    "yaml",
+    "yaz",
+    "zip",
+    "zlib"
+  ],
+  "maxMemory": 4096,
+  "completion": {
+    "insertUseDeclaration": true,
+    "useNamespacedClasses": true,
+    "fullyQualifyGlobalConstantsAndFunctions": false,
+    "namespaceMinCharacters": 1
+  },
+  "format": {
+    "enable": true
+  },
+  "files": {
+    "exclude": [
+      "**/node_modules",
+      "**/vendor",
+      "**/.git",
+      "**/storage",
+      "**/public/build"
+    ],
+    "maxSize": 1000000
+  },
+  "hover": {
+    "enable": true
+  },
+  "highlight": {
+    "enable": true
+  },
+  "references": {
+    "exclude": [
+      "**/node_modules",
+      "**/vendor"
+    ]
+  },
+  "trace": {
+    "server": "off"
+  },
+  "typeMap": {
+    "Livewire\\Component": {
+      "layout": {
+        "return": "Livewire\\View\\ComponentSlot"
+      }
+    }
+  }
+}

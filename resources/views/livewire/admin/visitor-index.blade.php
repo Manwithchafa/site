@@ -18,7 +18,7 @@
             <a
                 href="{{ route('admin.visitors.export', array_filter([
                     'q' => $search,
-                    'gender' => $gender,
+                    'sex' => $sex,
                     'membership' => $membership,
                     'bornAgain' => $bornAgain,
                     'registered' => $registered,
@@ -39,7 +39,7 @@
 
             <div class="lg:col-span-2">
                 <label class="text-sm font-semibold text-slate-700">Gender</label>
-                <select wire:model.live="gender" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#162b75] focus:ring-4 focus:ring-[#162b75]/10">
+                <select wire:model.live="sex" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none focus:border-[#162b75] focus:ring-4 focus:ring-[#162b75]/10">
                     <option value="">All</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
@@ -129,7 +129,7 @@
                         </x-admin.table.td>
                         <x-admin.table.td>
                             <div class="flex flex-wrap gap-2">
-                                <x-admin.badge>{{ ucfirst($visitor->gender) }}</x-admin.badge>
+                                <x-admin.badge>{{ ucfirst($visitor->sex) }}</x-admin.badge>
                                 @if ($visitor->wants_membership)
                                     <x-admin.badge tone="emerald">Membership</x-admin.badge>
                                 @endif
@@ -184,7 +184,7 @@
                     <section class="grid gap-4 sm:grid-cols-2">
                         <x-form.input label="First Name" name="edit_first_name" wire:model.blur="edit_first_name" required />
                         <x-form.input label="Last Name" name="edit_last_name" wire:model.blur="edit_last_name" required />
-                        <x-form.select label="Gender" name="edit_gender" wire:model.blur="edit_gender" required>
+                        <x-form.select label="Gender" name="edit_sex" wire:model.blur="edit_sex" required>
                             <option value="">Select gender</option>
                             <option value="female">Female</option>
                             <option value="male">Male</option>
@@ -195,7 +195,7 @@
                     </section>
 
                     <section class="space-y-4">
-                        <x-form.textarea label="Address" name="edit_address" wire:model.blur="edit_address" rows="3" />
+                        <x-form.textarea label="Residential Address" name="edit_residential_address" wire:model.blur="edit_residential_address" rows="3" />
                         <div class="grid gap-4 sm:grid-cols-2">
                             <x-form.input label="Nearest Bus Stop" name="edit_nearest_bus_stop" wire:model.blur="edit_nearest_bus_stop" />
                             <x-form.input label="Occupation" name="edit_occupation" wire:model.blur="edit_occupation" />

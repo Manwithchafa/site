@@ -18,7 +18,7 @@ class VisitorIndex extends Component
     public string $search = '';
 
     #[Url]
-    public string $gender = '';
+    public string $sex = '';
 
     #[Url]
     public string $membership = '';
@@ -37,7 +37,7 @@ class VisitorIndex extends Component
 
     public string $edit_last_name = '';
 
-    public string $edit_gender = '';
+    public string $edit_sex = '';
 
     public ?string $edit_date_of_birth = null;
 
@@ -45,7 +45,7 @@ class VisitorIndex extends Component
 
     public ?string $edit_email = null;
 
-    public ?string $edit_address = null;
+    public ?string $edit_residential_address = null;
 
     public ?string $edit_nearest_bus_stop = null;
 
@@ -61,14 +61,14 @@ class VisitorIndex extends Component
 
     public function updated($property): void
     {
-        if (in_array($property, ['search', 'gender', 'membership', 'bornAgain', 'registered'], true)) {
+        if (in_array($property, ['search', 'sex', 'membership', 'bornAgain', 'registered'], true)) {
             $this->resetPage();
         }
     }
 
     public function clearFilters(): void
     {
-        $this->reset(['search', 'gender', 'membership', 'bornAgain', 'registered']);
+        $this->reset(['search', 'sex', 'membership', 'bornAgain', 'registered']);
         $this->resetPage();
     }
 
@@ -79,11 +79,11 @@ class VisitorIndex extends Component
         $this->editingVisitorId = $visitor->id;
         $this->edit_first_name = $visitor->first_name;
         $this->edit_last_name = $visitor->last_name;
-        $this->edit_gender = $visitor->gender;
+        $this->edit_sex = $visitor->sex;
         $this->edit_date_of_birth = $visitor->date_of_birth?->toDateString();
         $this->edit_phone = $visitor->phone;
         $this->edit_email = $visitor->email;
-        $this->edit_address = $visitor->address;
+        $this->edit_residential_address = $visitor->residential_address;
         $this->edit_nearest_bus_stop = $visitor->nearest_bus_stop;
         $this->edit_occupation = $visitor->occupation;
         $this->edit_invited_by = $visitor->invited_by;
@@ -133,11 +133,11 @@ class VisitorIndex extends Component
         return [
             'edit_first_name' => ['required', 'string', 'max:255'],
             'edit_last_name' => ['required', 'string', 'max:255'],
-            'edit_gender' => ['required', Rule::in(['female', 'male'])],
+            'edit_sex' => ['required', Rule::in(['female', 'male'])],
             'edit_date_of_birth' => ['nullable', 'date'],
             'edit_phone' => ['required', 'string', 'max:255'],
             'edit_email' => ['nullable', 'email', 'max:255'],
-            'edit_address' => ['nullable', 'string'],
+            'edit_residential_address' => ['nullable', 'string'],
             'edit_nearest_bus_stop' => ['nullable', 'string', 'max:255'],
             'edit_occupation' => ['nullable', 'string', 'max:255'],
             'edit_invited_by' => ['nullable', 'string', 'max:255'],
@@ -153,11 +153,11 @@ class VisitorIndex extends Component
             'editingVisitorId',
             'edit_first_name',
             'edit_last_name',
-            'edit_gender',
+            'edit_sex',
             'edit_date_of_birth',
             'edit_phone',
             'edit_email',
-            'edit_address',
+            'edit_residential_address',
             'edit_nearest_bus_stop',
             'edit_occupation',
             'edit_invited_by',
@@ -188,7 +188,7 @@ class VisitorIndex extends Component
                         ->orWhere('occupation', 'like', "%{$search}%");
                 });
             })
-            ->when($this->gender !== '', fn (Builder $query) => $query->where('gender', $this->gender))
+            ->when($this->sex !== '', fn (Builder $query) => $query->where('sex', $this->sex))
             ->when($this->membership !== '', fn (Builder $query) => $query->where('wants_membership', $this->membership === 'yes'))
             ->when($this->bornAgain !== '', fn (Builder $query) => $query->where('born_again', $this->bornAgain === 'yes'))
             ->when($this->registered !== '', function (Builder $query) {

@@ -9,13 +9,13 @@
                 </div>
                 <div>
                     <h2 class="text-xl font-semibold text-slate-950">{{ $visitor->full_name }}</h2>
-                    <p class="text-sm text-slate-500">{{ ucfirst($visitor->gender) }} · {{ $visitor->phone }}</p>
+                    <p class="text-sm text-slate-500">{{ ucfirst($visitor->sex) }} · {{ $visitor->phone }}</p>
                 </div>
             </div>
 
             <dl class="mt-6 space-y-4 text-sm">
                 <div><dt class="text-slate-500">Email</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->email ?: 'Not provided' }}</dd></div>
-                <div><dt class="text-slate-500">Address</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->address ?: 'Not provided' }}</dd></div>
+                <div><dt class="text-slate-500">Residential Address</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->residential_address ?: 'Not provided' }}</dd></div>
                 <div><dt class="text-slate-500">Nearest Bus Stop</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->nearest_bus_stop ?: 'Not provided' }}</dd></div>
                 <div><dt class="text-slate-500">Occupation</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->occupation ?: 'Not provided' }}</dd></div>
                 <div><dt class="text-slate-500">Invited By</dt><dd class="mt-1 font-medium text-slate-950">{{ $visitor->invited_by ?: 'Not provided' }}</dd></div>

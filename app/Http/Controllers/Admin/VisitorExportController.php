@@ -28,7 +28,7 @@ class VisitorExportController extends Controller
                         ->orWhere('occupation', 'like', "%{$search}%");
                 });
             })
-            ->when($request->filled('gender'), fn (Builder $query) => $query->where('gender', $request->query('gender')))
+            ->when($request->filled('sex'), fn (Builder $query) => $query->where('sex', $request->query('sex')))
             ->when($request->filled('membership'), fn (Builder $query) => $query->where('wants_membership', $request->query('membership') === 'yes'))
             ->when($request->filled('bornAgain'), fn (Builder $query) => $query->where('born_again', $request->query('bornAgain') === 'yes'))
             ->when($request->filled('registered'), function (Builder $query) use ($request) {
@@ -53,7 +53,7 @@ class VisitorExportController extends Controller
             'Date of Birth',
             'Phone',
             'Email',
-            'Address',
+            'Residential Address',
             'Nearest Bus Stop',
             'Occupation',
             'Invited By',
@@ -75,11 +75,11 @@ class VisitorExportController extends Controller
             fputcsv($handle, [
                 $visitor->first_name,
                 $visitor->last_name,
-                ucfirst($visitor->gender),
+                ucfirst($visitor->sex),
                 $visitor->date_of_birth?->toDateString(),
                 $visitor->phone,
                 $visitor->email,
-                $visitor->address,
+                $visitor->residential_address,
                 $visitor->nearest_bus_stop,
                 $visitor->occupation,
                 $visitor->invited_by,

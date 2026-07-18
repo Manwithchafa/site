@@ -1,0 +1,26 @@
+includes:
+  - phpstan-baseline.neon
+
+parameters:
+  level: 5
+  paths:
+    - app
+    - tests
+
+  excludePaths:
+    - vendor
+    - storage
+    - bootstrap/cache
+
+  ignoreErrors:
+    # Livewire dynamic macros
+    - message: '#Call to an undefined method.*layout\(\)#'
+      paths:
+        - app/Livewire/**
+
+    # Dynamic property access patterns
+    - message: '#Undefined property#'
+      paths:
+        - app/Models/**
+
+  reportUnmatchedIgnoredErrors: false

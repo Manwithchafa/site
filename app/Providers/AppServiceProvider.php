@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
             // Non-fatal — ensure app still boots
         }
 
-        if ($this->app->environment('production') || request()->isSecure()) {
+        if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
     }

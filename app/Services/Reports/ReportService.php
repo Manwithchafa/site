@@ -133,10 +133,10 @@ class ReportService
                 ->whereHas('registrations', function ($q) use ($startDt, $endDt) {
                     $q->whereBetween('created_at', [$startDt->startOfDay(), $endDt->endOfDay()]);
                 })
-                ->selectRaw('gender, count(*) as total')
-                ->groupBy('gender')
+                ->selectRaw('sex, count(*) as total')
+                ->groupBy('sex')
                 ->get()
-                ->pluck('total', 'gender')
+                ->pluck('total', 'sex')
                 ->toArray();
 
             return $rows;
