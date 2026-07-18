@@ -1,4 +1,4 @@
-<x-layouts.public :title="'Registration Successful · '.$registration->church->name">
+<x-layouts.public :title="'Registration Successful · '.($registration->church->name ?? 'Registration Successful')">
     <div class="flex flex-1 flex-col justify-center py-8">
         <x-ui.card class="overflow-hidden">
             <div class="bg-gradient-to-br from-emerald-500 to-teal-600 px-6 py-10 text-center text-white sm:px-10">

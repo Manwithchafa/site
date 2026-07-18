@@ -11,8 +11,11 @@ class QrCodeController extends Controller
     public function show(string $code): Response
     {
         $qrCode = QrCode::query()
+            ->with(['church', 'churchService'])
             ->where('code', $code)
             ->where('status', 'active')
+            ->whereHas('church')
+            ->whereHas('churchService')
             ->firstOrFail();
 
         $payload = route('visitor-registration.create', ['code' => $qrCode->code]);

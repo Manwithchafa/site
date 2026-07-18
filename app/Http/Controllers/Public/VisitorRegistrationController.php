@@ -18,6 +18,8 @@ class VisitorRegistrationController extends Controller
             ->with(['church', 'churchService'])
             ->where('code', $code)
             ->where('status', 'active')
+            ->whereHas('church')
+            ->whereHas('churchService')
             ->firstOrFail();
 
         return view('visitor-registration.create', [
@@ -31,6 +33,8 @@ class VisitorRegistrationController extends Controller
             ->with(['church', 'churchService'])
             ->where('code', $code)
             ->where('status', 'active')
+            ->whereHas('church')
+            ->whereHas('churchService')
             ->firstOrFail();
 
         $data = $request->validated();
