@@ -54,10 +54,7 @@ class RegisterVisitorService
                 'public_uuid' => (string) Str::uuid(),
                 'visitor_id' => $visitor->id,
                 'church_id' => $qrCode->church_id,
-                'church_service_id' => $qrCode->church_service_id,
                 'qr_code_id' => $qrCode->id,
-                'registered_on' => $now->toDateString(),
-                'registered_at' => $now->format('H:i:s'),
                 'prayer_request' => $data['prayer_request'] ?? null,
                 'ip_address' => $ipAddress,
                 'user_agent' => $userAgent,
@@ -69,7 +66,7 @@ class RegisterVisitorService
 
             $qrCode->forceFill(['last_used_at' => $now])->save();
 
-            $registration = $registration->load(['visitor', 'church', 'churchService', 'qrCode']);
+            $registration = $registration->load(['visitor', 'church', 'qrCode']);
 
             try {
                 event(new VisitorRegistered($registration));

@@ -10,15 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class QrCode extends Model
 {
     use HasFactory;
-
-    protected $fillable = [
-        'church_id',
-        'church_service_id',
-        'code',
-        'label',
-        'status',
-        'last_used_at',
-    ];
+    protected $guarded = [];
 
     protected function casts(): array
     {
@@ -32,13 +24,13 @@ class QrCode extends Model
         return $this->belongsTo(Church::class);
     }
 
-    public function churchService(): BelongsTo
-    {
-        return $this->belongsTo(ChurchService::class);
-    }
-
     public function registrations(): HasMany
     {
         return $this->hasMany(VisitorRegistration::class);
+    }
+
+    public function churchService(): BelongsTo
+    {
+        return $this->belongsTo(ChurchService::class, 'church_service_id');
     }
 }

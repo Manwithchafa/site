@@ -212,13 +212,13 @@ class ReportService
 
             $rows = VisitorRegistration::query()
                 ->whereBetween('created_at', [$startDt->startOfDay(), $endDt->endOfDay()])
-                ->selectRaw('church_service_id, count(*) as total')
-                ->groupBy('church_service_id')
-                ->orderByDesc('total')
                 ->get()
-                ->mapWithKeys(function ($r) {
-                    return [$r->church_service_id => $r->total];
-                })->toArray();
+                ->mapToGroups(function ($r) {
+                    return [$r->created_at->format('l') => 1];
+                })
+                ->map->count()
+                ->sortDesc()
+                ->toArray();
 
             return $rows;
         });

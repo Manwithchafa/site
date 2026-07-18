@@ -29,7 +29,7 @@
         </x-admin.card>
 
         <x-admin.card class="p-6 xl:col-span-2">
-            <x-admin.section-header title="Visitor Timeline" description="Registrations, assignments, and notes in chronological order." />
+<x-admin.section-header title="First Timer Timeline" description="Registrations, assignments, and notes in chronological order." />
 
             <div class="mt-6 space-y-5">
                 @forelse ($timeline as $item)

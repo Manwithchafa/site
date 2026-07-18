@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('qr_codes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('church_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('church_service_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('church_service_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('code')->unique();
             $table->string('label');
             $table->string('status')->default('active');

@@ -21,12 +21,8 @@
                             <dd class="text-right font-medium text-slate-950">{{ $registration->church->name }}</dd>
                         </div>
                         <div class="flex items-start justify-between gap-4">
-                            <dt class="text-slate-500">Service</dt>
-                            <dd class="text-right font-medium text-slate-950">{{ $registration->churchService->name }}</dd>
-                        </div>
-                        <div class="flex items-start justify-between gap-4">
                             <dt class="text-slate-500">Date</dt>
-                            <dd class="text-right font-medium text-slate-950">{{ $registration->registered_on->format('l, M j, Y') }}</dd>
+                            <dd class="text-right font-medium text-slate-950">{{ $registration->created_at->format('l, M j, Y') }}</dd>
                         </div>
                         <div class="flex items-start justify-between gap-4">
                             <dt class="text-slate-500">Time</dt>
@@ -36,7 +32,7 @@
                 </div>
 
                 <p class="text-center text-sm leading-6 text-slate-500">
-                    A member of our welcome team may reach out to you after the service.
+                    A member of our welcome team may reach out to you as you continue your journey with us.
                 </p>
             </div>
         </x-ui.card>

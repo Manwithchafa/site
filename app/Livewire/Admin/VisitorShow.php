@@ -14,19 +14,24 @@ class VisitorShow extends Component
     {
         $this->visitor = $visitor->load([
             'church',
-            'registrations.churchService',
             'registrations.qrCode',
             'assignments.assignee',
             'notes.user',
         ])->loadCount(['registrations', 'assignments', 'notes']);
     }
 
-    public function render(): View
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     * @noinspection PhpUndefinedMethodInspection
+     */
+    public function render()
     {
         $timeline = collect()
             ->merge($this->visitor->registrations->map(fn ($registration) => [
                 'type' => 'registration',
-                'title' => 'Registered for '.$registration->churchService->name,
+                'title' => 'First Timer registration completed',
                 'description' => $registration->prayer_request ? 'Prayer request submitted' : 'Visitor registration completed',
                 'timestamp' => $registration->created_at,
             ]))
@@ -42,15 +47,23 @@ class VisitorShow extends Component
                 'description' => str($note->body)->limit(100),
                 'timestamp' => $note->created_at,
             ]))
-            ->sortByDesc('timestamp')
+                ->sortByDesc('timestamp')
             ->values();
 
-        return view('livewire.admin.visitor-show', [
+        $view = view('livewire.admin.visitor-show', [
             'timeline' => $timeline,
-        ])->layout('components.layouts.admin', [
+        ]);
+
+        return $this->applyLayout($view);
+    }
+
+    private function applyLayout(\Illuminate\View\View $view): \Illuminate\View\View
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $view->layout('components.layouts.admin', [
             'title' => $this->visitor->full_name,
             'pageTitle' => $this->visitor->full_name,
-            'pageDescription' => 'Visitor profile, timeline, assignments, notes, and prayer requests.',
+            'pageDescription' => 'First Timer profile, timeline, assignments, notes, and prayer requests.',
         ]);
     }
 }

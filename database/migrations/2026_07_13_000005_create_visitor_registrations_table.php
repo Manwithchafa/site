@@ -13,10 +13,10 @@ return new class extends Migration
             $table->uuid('public_uuid')->unique();
             $table->foreignId('visitor_id')->constrained()->cascadeOnDelete();
             $table->foreignId('church_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('church_service_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('church_service_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('qr_code_id')->constrained()->cascadeOnDelete();
-            $table->date('registered_on');
-            $table->time('registered_at');
+            $table->date('registered_on')->nullable();
+            $table->time('registered_at')->nullable();
             $table->text('prayer_request')->nullable();
             $table->string('ip_address')->nullable();
             $table->text('user_agent')->nullable();

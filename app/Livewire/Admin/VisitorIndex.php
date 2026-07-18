@@ -59,7 +59,7 @@ class VisitorIndex extends Component
 
     public string $edit_status = 'new';
 
-    public function updated($property): void
+    public function updated(string $property): void
     {
         if (in_array($property, ['search', 'gender', 'membership', 'bornAgain', 'registered'], true)) {
             $this->resetPage();
@@ -110,7 +110,7 @@ class VisitorIndex extends Component
             ->update($validated);
 
         $this->resetEditForm();
-        session()->flash('status', 'Visitor profile updated.');
+        session()->flash('status', 'First Timer profile updated.');
     }
 
     public function deleteVisitor(int $visitorId): void
@@ -122,7 +122,7 @@ class VisitorIndex extends Component
         }
 
         $this->resetPage();
-        session()->flash('status', 'Visitor profile deleted.');
+        session()->flash('status', 'First Timer profile deleted.');
     }
 
     /**
@@ -170,10 +170,16 @@ class VisitorIndex extends Component
         $this->resetValidation();
     }
 
-    public function render(): View
+    /**
+     * Render the component.
+     *
+     * @return \Illuminate\View\View
+     * @noinspection PhpUndefinedMethodInspection
+     */
+    public function render()
     {
         $visitors = Visitor::query()
-            ->with(['church', 'registrations.churchService'])
+            ->with(['church', 'registrations'])
             ->withCount(['registrations', 'assignments', 'notes'])
             ->when($this->search !== '', function (Builder $query) {
                 $search = trim($this->search);
@@ -194,9 +200,12 @@ class VisitorIndex extends Component
             ->when($this->registered !== '', function (Builder $query) {
                 $query->whereHas('registrations', function (Builder $query) {
                     match ($this->registered) {
-                        'today' => $query->whereDate('registered_on', today()),
-                        'week' => $query->whereDate('registered_on', '>=', now()->startOfWeek()->toDateString()),
-                        'month' => $query->whereDate('registered_on', '>=', now()->startOfMonth()->toDateString()),
+                        'today' => $query->whereDate('created_at', today()),
+                        'week' => $query->whereDate('created_at', '>=', now()->startOfWeek()->toDateString()),
+                        'month' => $query->whereDate('created_at', '>=', now()->startOfMonth()->toDateString()),
+                        'year' => $query->whereDate('created_at', '>=', now()->startOfYear()->toDateString()),
+                        'yesterday' => $query->whereDate('created_at', today()->subDay()),
+                        'custom' => $query->whereBetween('created_at', [now()->subDays(7)->startOfDay(), now()->endOfDay()]),
                         default => null,
                     };
                 });
@@ -204,12 +213,20 @@ class VisitorIndex extends Component
             ->latest()
             ->paginate($this->perPage);
 
-        return view('livewire.admin.visitor-index', [
+        $view = view('livewire.admin.visitor-index', [
             'visitors' => $visitors,
-        ])->layout('components.layouts.admin', [
-            'title' => 'Visitors',
-            'pageTitle' => 'Visitors',
-            'pageDescription' => 'Search, filter, review, and open visitor profiles.',
+        ]);
+
+        return $this->applyLayout($view);
+    }
+
+    private function applyLayout(\Illuminate\View\View $view): \Illuminate\View\View
+    {
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $view->layout('components.layouts.admin', [
+            'title' => 'First Timers',
+            'pageTitle' => 'First Timers',
+            'pageDescription' => 'Search, filter, review, and open first timer profiles.',
         ]);
     }
 }

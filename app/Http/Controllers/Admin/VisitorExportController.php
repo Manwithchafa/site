@@ -13,7 +13,7 @@ class VisitorExportController extends Controller
     public function __invoke(Request $request)
     {
         $visitors = Visitor::query()
-            ->with(['church', 'registrations.churchService'])
+            ->with(['church', 'registrations'])
             ->withCount(['registrations', 'assignments', 'notes'])
             ->when($request->filled('q'), function (Builder $query) use ($request) {
                 $search = trim((string) $request->query('q'));
@@ -34,9 +34,11 @@ class VisitorExportController extends Controller
             ->when($request->filled('registered'), function (Builder $query) use ($request) {
                 $query->whereHas('registrations', function (Builder $query) use ($request) {
                     match ($request->query('registered')) {
-                        'today' => $query->whereDate('registered_on', today()),
-                        'week' => $query->whereDate('registered_on', '>=', now()->startOfWeek()->toDateString()),
-                        'month' => $query->whereDate('registered_on', '>=', now()->startOfMonth()->toDateString()),
+                        'today' => $query->whereDate('created_at', today()),
+                        'yesterday' => $query->whereDate('created_at', today()->subDay()),
+                        'week' => $query->whereDate('created_at', '>=', now()->startOfWeek()->toDateString()),
+                        'month' => $query->whereDate('created_at', '>=', now()->startOfMonth()->toDateString()),
+                        'year' => $query->whereDate('created_at', '>=', now()->startOfYear()->toDateString()),
                         default => null,
                     };
                 });
@@ -64,7 +66,6 @@ class VisitorExportController extends Controller
             'Registrations',
             'Assignments',
             'Notes',
-            'Last Registered Service',
             'Last Registered At',
             'Created At',
         ]);
@@ -90,7 +91,6 @@ class VisitorExportController extends Controller
                 $visitor->registrations_count,
                 $visitor->assignments_count,
                 $visitor->notes_count,
-                $lastRegistration?->churchService?->name,
                 $lastRegistration?->created_at?->format('Y-m-d H:i:s'),
                 $visitor->created_at?->format('Y-m-d H:i:s'),
             ]);
@@ -100,7 +100,7 @@ class VisitorExportController extends Controller
         $csv = stream_get_contents($handle);
         fclose($handle);
 
-        $filename = 'visitors_'.now()->format('Ymd_His').'.csv';
+        $filename = 'first_timers_'.now()->format('Ymd_His').'.csv';
 
         return Response::make($csv, 200, [
             'Content-Type' => 'text/csv',

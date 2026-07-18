@@ -39,24 +39,10 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $service = ChurchService::query()->firstOrCreate(
-            [
-                'church_id' => $church->id,
-                'slug' => 'sunday-celebration',
-            ],
-            [
-                'name' => 'Sunday Celebration Service',
-                'day_of_week' => 'Sunday',
-                'starts_at' => '09:00',
-                'status' => 'active',
-            ]
-        );
-
         QrCode::query()->firstOrCreate(
             ['code' => 'welcome-service'],
             [
                 'church_id' => $church->id,
-                'church_service_id' => $service->id,
                 'label' => 'Main Entrance Welcome QR',
                 'status' => 'active',
             ]
@@ -110,9 +96,7 @@ class DatabaseSeeder extends Seeder
                 [
                     'public_uuid' => (string) Str::uuid(),
                     'church_id' => $church->id,
-                    'church_service_id' => $service->id,
                     'qr_code_id' => QrCode::query()->where('code', 'welcome-service')->value('id'),
-                    'registered_at' => $registeredAt->format('H:i:s'),
                     'prayer_request' => $prayerRequest,
                     'ip_address' => '127.0.0.1',
                     'user_agent' => 'Seeder',

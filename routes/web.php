@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\ReportsController;
 use App\Http\Controllers\Admin\VisitorExportController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Public\QrCodeController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Livewire\Admin\DashboardHome;
 use App\Livewire\Admin\VisitorIndex;
@@ -18,6 +19,12 @@ Route::get('/qr/{code}', [VisitorRegistrationController::class, 'create'])
 
 Route::post('/qr/{code}', [VisitorRegistrationController::class, 'store'])
     ->name('visitor-registration.store');
+
+Route::get('/qr/{code}/image', [QrCodeController::class, 'show'])
+    ->name('visitor-registration.qr-image');
+
+Route::get('/qr/{code}/image/download', [QrCodeController::class, 'download'])
+    ->name('visitor-registration.qr-image.download');
 
 Route::get('/registration/success/{registration:public_uuid}', [VisitorRegistrationController::class, 'success'])
     ->name('visitor-registration.success');
