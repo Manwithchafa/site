@@ -18,7 +18,7 @@ class RegisterVisitorService
         return DB::transaction(function () use ($qrCode, $data, $ipAddress, $userAgent) {
             $now = now();
 
-            $visitorData = Arr::only($data, [
+            $visitorProfileFields = [
                 'first_name',
                 'last_name',
                 'sex',
@@ -42,7 +42,9 @@ class RegisterVisitorService
                 'wants_counsel',
                 'preferred_visit_date',
                 'is_baptized',
-            ]);
+            ];
+
+            $visitorData = Arr::only($data, $visitorProfileFields);
 
             $visitor = Visitor::create([
                 ...Arr::only($visitorData, Schema::getColumnListing('visitors')),

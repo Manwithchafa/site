@@ -18,11 +18,11 @@
                     <dl class="grid gap-4 text-sm">
                         <div class="flex items-start justify-between gap-4">
                             <dt class="text-slate-500">Church</dt>
-                            <dd class="text-right font-medium text-slate-950">{{ $registration->church->name }}</dd>
+                            <dd class="text-right font-medium text-slate-950">{{ optional($registration->church)->name ?? 'Unknown Church' }}</dd>
                         </div>
                         <div class="flex items-start justify-between gap-4">
                             <dt class="text-slate-500">Service</dt>
-                            <dd class="text-right font-medium text-slate-950">{{ $registration->churchService->name }}</dd>
+                            <dd class="text-right font-medium text-slate-950">{{ optional($registration->churchService)->name ?? 'Unknown Service' }}</dd>
                         </div>
                         <div class="flex items-start justify-between gap-4">
                             <dt class="text-slate-500">Date</dt>

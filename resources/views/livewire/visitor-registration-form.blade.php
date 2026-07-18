@@ -9,7 +9,7 @@
         <div class="mt-8">
             <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#d29a18]">Visitor registration</p>
             <h1 class="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-[#162b75] sm:text-4xl">
-                Welcome to {{ $qrCode->church->name }}
+                Welcome to {{ optional($qrCode->church)->name ?? 'our church' }}
             </h1>
             <p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
                 We are delighted to receive you. Please share a few details so our welcome team can stay connected with you after service.
@@ -18,7 +18,7 @@
 
         <div class="mt-8 rounded-2xl border border-[#162b75]/10 bg-[#f8f9fc] p-5">
             <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Service</p>
-            <p class="mt-2 text-base font-bold text-slate-950">{{ $qrCode->churchService->name }}</p>
+            <p class="mt-2 text-base font-bold text-slate-950">{{ optional($qrCode->churchService)->name ?? 'Service' }}</p>
             <p class="mt-1 text-sm text-slate-500">{{ now()->format('F j, Y') }}</p>
         </div>
 

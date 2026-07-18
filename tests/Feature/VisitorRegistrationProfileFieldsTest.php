@@ -106,15 +106,62 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
         $this->assertSame(28, $visitor->age);
         $this->assertSame('Married', $visitor->marital_status);
         $this->assertSame('2020-08-14', $visitor->wedding_anniversary->toDateString());
+        $this->assertSame('+2348123456789', $visitor->phone);
+        $this->assertSame('ada@example.com', $visitor->email);
         $this->assertSame('Abuja', $visitor->city);
         $this->assertSame('No. 1 Test Road', $visitor->residential_address);
         $this->assertSame('Office Plaza', $visitor->business_address);
+        $this->assertSame('Mende Bus Stop', $visitor->nearest_bus_stop);
+        $this->assertSame('Teacher', $visitor->occupation);
         $this->assertSame('John Doe', $visitor->invited_by_name);
         $this->assertSame('+2348080000000', $visitor->invited_by_phone);
         $this->assertTrue($visitor->born_again);
         $this->assertSame('2021-01-01', $visitor->born_again_when->toDateString());
+        $this->assertTrue($visitor->wants_membership);
         $this->assertTrue($visitor->wants_counsel);
         $this->assertSame('2026-07-20', $visitor->preferred_visit_date->toDateString());
+        $this->assertTrue($visitor->is_baptized);
+    }
+
+    public function test_registration_details_are_saved_to_the_visitor_registrations_table(): void
+    {
+        $qrCode = $this->createQrCode();
+
+        $registration = app(RegisterVisitorService::class)->register($qrCode, [
+            'first_name' => 'Ada',
+            'last_name' => 'Okafor',
+            'sex' => 'female',
+            'age' => 28,
+            'marital_status' => 'Married',
+            'wedding_anniversary' => '2020-08-14',
+            'phone' => '+2348123456789',
+            'email' => 'ada@example.com',
+            'city' => 'Abuja',
+            'residential_address' => 'No. 1 Test Road',
+            'business_address' => 'Office Plaza',
+            'nearest_bus_stop' => 'Mende Bus Stop',
+            'occupation' => 'Teacher',
+            'invited_by' => 'Pastor Paul',
+            'invited_by_name' => 'John Doe',
+            'invited_by_phone' => '+2348080000000',
+            'born_again' => true,
+            'born_again_when' => '2021-01-01',
+            'wants_membership' => true,
+            'wants_counsel' => true,
+            'preferred_visit_date' => '2026-07-20',
+            'is_baptized' => true,
+            'prayer_request' => 'Please pray for me.',
+        ], '127.0.0.1', 'phpunit-agent');
+
+        $this->assertDatabaseHas('visitor_registrations', [
+            'id' => $registration->id,
+            'church_id' => $qrCode->church_id,
+            'church_service_id' => $qrCode->church_service_id,
+            'qr_code_id' => $qrCode->id,
+            'prayer_request' => 'Please pray for me.',
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'phpunit-agent',
+        ]);
     }
 
     private function createQrCode(): QrCode

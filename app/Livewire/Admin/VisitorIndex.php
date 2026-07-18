@@ -59,7 +59,7 @@ class VisitorIndex extends Component
 
     public string $edit_status = 'new';
 
-    public function updated($property): void
+    public function updated(string $property): void
     {
         if (in_array($property, ['search', 'sex', 'membership', 'bornAgain', 'registered'], true)) {
             $this->resetPage();
@@ -204,9 +204,13 @@ class VisitorIndex extends Component
             ->latest()
             ->paginate($this->perPage);
 
-        return view('livewire.admin.visitor-index', [
+        /** @var \Illuminate\View\View $view */
+        $view = view('livewire.admin.visitor-index', [
             'visitors' => $visitors,
-        ])->layout('components.layouts.admin', [
+        ]);
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $view->layout('components.layouts.admin', [
             'title' => 'Visitors',
             'pageTitle' => 'Visitors',
             'pageDescription' => 'Search, filter, review, and open visitor profiles.',
