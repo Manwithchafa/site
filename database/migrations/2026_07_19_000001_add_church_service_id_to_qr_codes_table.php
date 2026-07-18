@@ -11,8 +11,9 @@ return new class extends Migration
         if (! Schema::hasColumn('qr_codes', 'church_service_id')) {
             Schema::table('qr_codes', function (Blueprint $table) {
                 $table->foreignId('church_service_id')
+                    ->nullable()
                     ->constrained('church_services')
-                    ->cascadeOnDelete()
+                    ->nullOnDelete()
                     ->after('church_id');
             });
         }
