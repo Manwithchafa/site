@@ -1,5 +1,5 @@
-<x-layouts.public :title="'First Timer Registration · '.$qrCode->church->name">
+<x-layouts.public :title="'Visitor Registration · '.$qrCode->church->name">
     <div class="flex flex-1 flex-col justify-center py-4 sm:py-8">
-        @include('visitor-registration.form-native', ['qrCode' => $qrCode])
+        <livewire:visitor-registration-form :qr-code="$qrCode" />
     </div>
 </x-layouts.public>

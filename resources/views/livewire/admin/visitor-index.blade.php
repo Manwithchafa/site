@@ -10,8 +10,8 @@
     <div class="overflow-hidden rounded-[1.75rem] bg-[#08133f] p-6 text-white shadow-2xl shadow-[#08133f]/20">
         <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
-                <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#f5b82e]">First Timers</p>
-                <h2 class="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">Manage First Timers</h2>
+                <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#f5b82e]">Visitor database</p>
+                <h2 class="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">Manage members and visitors</h2>
                 <p class="mt-2 max-w-2xl text-sm leading-6 text-white/65">Filter records, update profiles, remove duplicates, and export a spreadsheet of the exact list currently on screen.</p>
             </div>
 
@@ -76,7 +76,7 @@
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-sm font-semibold text-slate-500">{{ $visitors->total() }} first timer{{ $visitors->total() === 1 ? '' : 's' }} found</p>
+            <p class="text-sm font-semibold text-slate-500">{{ $visitors->total() }} visitor{{ $visitors->total() === 1 ? '' : 's' }} found</p>
             <div class="flex flex-col gap-2 sm:flex-row">
                 <a
                     href="{{ route('admin.visitors.export', array_filter([
@@ -96,12 +96,12 @@
     </x-admin.card>
 
     @if ($visitors->isEmpty())
-        <x-admin.empty-state title="No first timers match your filters" description="Adjust search terms or filters to see first timer records." />
+        <x-admin.empty-state title="No visitors match your filters" description="Adjust search terms or filters to see visitor records." />
     @else
         <x-admin.table.wrapper>
             <thead class="bg-[#f8f9fc]">
                 <tr>
-                    <x-admin.table.th>First Timer</x-admin.table.th>
+                    <x-admin.table.th>Visitor</x-admin.table.th>
                     <x-admin.table.th>Contact</x-admin.table.th>
                     <x-admin.table.th>Profile</x-admin.table.th>
                     <x-admin.table.th>Registrations</x-admin.table.th>
@@ -174,7 +174,7 @@
             <div class="mx-auto max-w-3xl rounded-[1.5rem] border border-slate-200 bg-white shadow-2xl">
                 <div class="flex items-start justify-between gap-4 border-b border-slate-100 px-5 py-4 sm:px-6">
                     <div>
-                        <h2 class="text-lg font-extrabold text-[#162b75]">Edit first timer</h2>
+                        <h2 class="text-lg font-extrabold text-[#162b75]">Edit visitor</h2>
                         <p class="mt-1 text-sm text-slate-500">Update member profile and follow-up status.</p>
                     </div>
                     <button wire:click="cancelEdit" type="button" class="rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold text-slate-500 hover:bg-slate-50">Close</button>

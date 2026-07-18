@@ -63,7 +63,7 @@
                     <a href="{{ route('admin.visitors.show', $registration->visitor) }}" class="flex items-center justify-between gap-4 rounded-2xl border border-slate-100 p-4 transition hover:border-slate-300 hover:bg-slate-50">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-semibold text-slate-950">{{ $registration->visitor->full_name }}</p>
-                            <p class="mt-1 truncate text-sm text-slate-500">{{ $registration->created_at->format('M j, g:i A') }}</p>
+                            <p class="mt-1 truncate text-sm text-slate-500">{{ $registration->churchService->name }} · {{ $registration->created_at->format('M j, g:i A') }}</p>
                         </div>
                         <x-admin.badge tone="blue">{{ $registration->qrCode->label }}</x-admin.badge>
                     </a>
@@ -92,10 +92,9 @@
         </x-admin.card>
     </div>
 
-    <script type="application/json" id="charts-data">@json($charts)</script>
     <script>
         document.addEventListener('livewire:init', () => {
-            const charts = JSON.parse(document.getElementById('charts-data').textContent);
+            const charts = @json($charts);
             const palette = ['#162b75', '#d29a18', '#d9232e', '#64748b', '#10b981', '#8b5cf6'];
 
             const seriesFrom = (items) => items.map((item) => item.value);

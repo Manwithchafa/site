@@ -48,7 +48,6 @@
                         <x-admin.nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard Home</x-admin.nav-link>
                         <x-admin.nav-link :href="route('admin.visitors.index')" :active="request()->routeIs('admin.visitors.*')">Visitor List</x-admin.nav-link>
                         <x-admin.nav-link :href="route('visitor-registration.create', 'welcome-service')">QR Registration</x-admin.nav-link>
-                        <x-admin.nav-link :href="route('visitor-registration.qr-image.download', 'welcome-service')">Download Welcome QR</x-admin.nav-link>
                         <x-admin.nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports</x-admin.nav-link>
                     </nav>
 

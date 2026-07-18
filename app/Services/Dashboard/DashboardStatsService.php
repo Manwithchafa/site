@@ -16,7 +16,7 @@ class DashboardStatsService
 
         return [
             'total_visitors' => Visitor::query()->count(),
-            'today_registrations' => VisitorRegistration::query()->whereBetween('created_at', [$today->startOfDay(), $today->endOfDay()])->count(),
+            'today_registrations' => VisitorRegistration::query()->whereDate('registered_on', $today)->count(),
             'membership_interest' => Visitor::query()->where('wants_membership', true)->count(),
             'prayer_requests' => VisitorRegistration::query()->whereNotNull('prayer_request')->where('prayer_request', '!=', '')->count(),
         ];
@@ -27,9 +27,9 @@ class DashboardStatsService
         $start = CarbonImmutable::now()->startOfMonth()->subMonths($months - 1);
 
         $rows = VisitorRegistration::query()
-            ->where('created_at', '>=', $start->toDateString())
-            ->get(['created_at'])
-            ->groupBy(fn (VisitorRegistration $registration) => $registration->created_at->format('Y-m'))
+            ->whereDate('registered_on', '>=', $start->toDateString())
+            ->get(['registered_on'])
+            ->groupBy(fn (VisitorRegistration $registration) => $registration->registered_on->format('Y-m'))
             ->map->count();
 
         return collect(range(0, $months - 1))
@@ -47,9 +47,9 @@ class DashboardStatsService
         $start = CarbonImmutable::now()->startOfDay()->subDays($days - 1);
 
         $rows = VisitorRegistration::query()
-            ->where('created_at', '>=', $start->toDateString())
-            ->get(['created_at'])
-            ->groupBy(fn (VisitorRegistration $registration) => $registration->created_at->format('Y-m-d'))
+            ->whereDate('registered_on', '>=', $start->toDateString())
+            ->get(['registered_on'])
+            ->groupBy(fn (VisitorRegistration $registration) => $registration->registered_on->format('Y-m-d'))
             ->map->count();
 
         return collect(range(0, $days - 1))
@@ -74,7 +74,7 @@ class DashboardStatsService
                 return [
                     'label' => $weekStart->format('M j'),
                     'value' => VisitorRegistration::query()
-                        ->whereBetween('created_at', [$weekStart->startOfDay(), $weekEnd->endOfDay()])
+                        ->whereBetween('registered_on', [$weekStart->toDateString(), $weekEnd->toDateString()])
                         ->count(),
                 ];
             })
@@ -140,7 +140,7 @@ class DashboardStatsService
     public function recentRegistrations(int $limit = 8): Collection
     {
         return VisitorRegistration::query()
-            ->with(['visitor', 'qrCode'])
+            ->with(['visitor', 'churchService', 'qrCode'])
             ->latest()
             ->limit($limit)
             ->get();
@@ -149,13 +149,13 @@ class DashboardStatsService
     public function recentActivity(int $limit = 10): Collection
     {
         return VisitorRegistration::query()
-            ->with(['visitor'])
+            ->with(['visitor', 'churchService'])
             ->latest()
             ->limit($limit)
             ->get()
             ->map(fn (VisitorRegistration $registration) => [
                 'title' => "{$registration->visitor->full_name} registered",
-                'description' => 'First Timer registration completed',
+                'description' => $registration->churchService->name,
                 'timestamp' => $registration->created_at,
             ]);
     }

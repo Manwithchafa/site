@@ -7,18 +7,18 @@
         </div>
 
         <div class="mt-8">
-            <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#d29a18]">First Timer Registration</p>
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-[#d29a18]">Visitor registration</p>
             <h1 class="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-[#162b75] sm:text-4xl">
                 Welcome to {{ $qrCode->church->name }}
             </h1>
             <p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-                We're delighted to have you worship with us today. Please complete this short First Timer Registration form. Your information helps our First Timers team welcome and stay connected with you.
+                We are delighted to receive you. Please share a few details so our welcome team can stay connected with you after service.
             </p>
         </div>
 
         <div class="mt-8 rounded-2xl border border-[#162b75]/10 bg-[#f8f9fc] p-5">
-            <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Welcome</p>
-            <p class="mt-2 text-base font-bold text-slate-950">A warm welcome from our church family</p>
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Service</p>
+            <p class="mt-2 text-base font-bold text-slate-950">{{ $qrCode->churchService->name }}</p>
             <p class="mt-1 text-sm text-slate-500">{{ now()->format('F j, Y') }}</p>
         </div>
 

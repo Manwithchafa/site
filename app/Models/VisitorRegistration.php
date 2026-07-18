@@ -41,6 +41,11 @@ class VisitorRegistration extends Model
         return $this->belongsTo(Church::class);
     }
 
+    public function churchService(): BelongsTo
+    {
+        return $this->belongsTo(ChurchService::class);
+    }
+
     public function qrCode(): BelongsTo
     {
         return $this->belongsTo(QrCode::class);

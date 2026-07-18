@@ -25,18 +25,6 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
             ->assertDontSee('wire:submit', false);
     }
 
-    public function test_registration_form_uses_first_timer_copy_without_service_specific_details(): void
-    {
-        $qrCode = $this->createQrCode();
-
-        $this->get(route('visitor-registration.create', $qrCode->code))
-            ->assertOk()
-            ->assertSee('First Timer Registration')
-            ->assertSee('First Timer')
-            ->assertDontSee('Sunday Celebration Service')
-            ->assertDontSee('Service');
-    }
-
     public function test_registration_success_page_renders_after_submission(): void
     {
         $qrCode = $this->createQrCode();

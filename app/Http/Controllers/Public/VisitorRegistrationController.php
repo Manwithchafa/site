@@ -52,7 +52,7 @@ class VisitorRegistrationController extends Controller
 
     public function success(VisitorRegistration $registration): View
     {
-        $registration->load(['visitor', 'church']);
+        $registration->load(['visitor', 'church', 'churchService']);
 
         return view('visitor-registration.success', [
             'registration' => $registration,

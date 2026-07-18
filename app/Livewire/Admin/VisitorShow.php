@@ -14,24 +14,19 @@ class VisitorShow extends Component
     {
         $this->visitor = $visitor->load([
             'church',
+            'registrations.churchService',
             'registrations.qrCode',
             'assignments.assignee',
             'notes.user',
         ])->loadCount(['registrations', 'assignments', 'notes']);
     }
 
-    /**
-     * Render the component.
-     *
-     * @return \Illuminate\View\View
-     * @noinspection PhpUndefinedMethodInspection
-     */
-    public function render()
+    public function render(): View
     {
         $timeline = collect()
             ->merge($this->visitor->registrations->map(fn ($registration) => [
                 'type' => 'registration',
-                'title' => 'First Timer registration completed',
+                'title' => 'Registered for '.$registration->churchService->name,
                 'description' => $registration->prayer_request ? 'Prayer request submitted' : 'Visitor registration completed',
                 'timestamp' => $registration->created_at,
             ]))
@@ -47,23 +42,15 @@ class VisitorShow extends Component
                 'description' => str($note->body)->limit(100),
                 'timestamp' => $note->created_at,
             ]))
-                ->sortByDesc('timestamp')
+            ->sortByDesc('timestamp')
             ->values();
 
-        $view = view('livewire.admin.visitor-show', [
+        return view('livewire.admin.visitor-show', [
             'timeline' => $timeline,
-        ]);
-
-        return $this->applyLayout($view);
-    }
-
-    private function applyLayout(\Illuminate\View\View $view): \Illuminate\View\View
-    {
-        /** @noinspection PhpUndefinedMethodInspection */
-        return $view->layout('components.layouts.admin', [
+        ])->layout('components.layouts.admin', [
             'title' => $this->visitor->full_name,
             'pageTitle' => $this->visitor->full_name,
-            'pageDescription' => 'First Timer profile, timeline, assignments, notes, and prayer requests.',
+            'pageDescription' => 'Visitor profile, timeline, assignments, notes, and prayer requests.',
         ]);
     }
 }

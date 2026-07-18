@@ -62,7 +62,7 @@ class VisitorRegistrationForm extends Component
 
     public function mount(QrCode $qrCode): void
     {
-        $this->qrCode = $qrCode->loadMissing(['church']);
+        $this->qrCode = $qrCode->loadMissing(['church', 'churchService']);
     }
 
     public function submit(RegisterVisitorService $service)
