@@ -22,33 +22,33 @@
         <script defer src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         @livewireStyles
     </head>
-    <body class="bg-[#eef1f7] font-sans text-slate-950 antialiased">
+    <body class="bg-[#070b16] font-sans text-slate-100 antialiased">
         <div class="relative min-h-screen overflow-hidden">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(22,43,117,0.12),_transparent_30rem),radial-gradient(circle_at_bottom_right,_rgba(245,184,46,0.16),_transparent_28rem),linear-gradient(180deg,_#f8fafc_0%,_#eef1f7_100%)]"></div>
-            <div class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#162b75] via-[#f5b82e] to-[#d9232e]"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.14),_transparent_28rem),radial-gradient(circle_at_bottom_right,_rgba(245,184,46,0.10),_transparent_30rem),linear-gradient(180deg,_#0b1020_0%,_#070b16_55%,_#05070d_100%)]"></div>
+            <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#f5b82e]/70 to-transparent"></div>
 
             <div class="relative min-h-screen lg:flex">
             <div id="admin-mobile-menu" class="fixed inset-0 z-40 hidden lg:hidden">
                 <button type="button" data-admin-menu-close class="absolute inset-0 bg-slate-950/40 backdrop-blur-sm" aria-label="Close menu"></button>
-                <aside class="relative flex h-full w-[min(20rem,85vw)] flex-col bg-[#08133f] px-5 py-6 text-white shadow-2xl">
+                <aside class="relative flex h-full w-[min(19rem,85vw)] flex-col border-r border-white/10 bg-[#090f1f] px-4 py-5 text-white shadow-2xl">
                     <div class="flex items-start justify-between gap-4">
-                        <a href="{{ route('admin.dashboard') }}" class="block min-w-0 flex-1 rounded-3xl border border-white/10 bg-white/10 p-4 shadow-sm">
-                            <span class="flex h-16 items-center justify-center rounded-2xl bg-white p-2">
+                        <a href="{{ route('admin.dashboard') }}" class="block min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                            <span class="flex h-12 items-center justify-center rounded-xl bg-white p-2">
                                 <img src="{{ asset('images/CHlogo.png') }}" alt="Christ Embassy" class="max-h-full max-w-full object-contain">
                             </span>
                             <span class="mt-3 block">
                                 <span class="block truncate text-sm font-bold text-white">{{ $currentChurch->name ?? 'Church ERP' }}</span>
-                                <span class="block text-xs font-medium text-white/55">Visitor Management</span>
+                                <span class="block text-xs font-medium text-slate-400">Admin workspace</span>
                             </span>
                         </a>
                         <button type="button" data-admin-menu-close class="rounded-xl border border-white/15 px-3 py-2 text-sm font-bold text-white/80">Close</button>
                     </div>
 
-                    <nav class="mt-8 space-y-1">
-                        <x-admin.nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard Home</x-admin.nav-link>
-                        <x-admin.nav-link :href="route('admin.visitors.index')" :active="request()->routeIs('admin.visitors.*')">Visitor List</x-admin.nav-link>
-                        <x-admin.nav-link :href="route('visitor-registration.create', 'welcome-service')">QR Registration</x-admin.nav-link>
-                        <x-admin.nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports</x-admin.nav-link>
+                    <nav class="mt-6 space-y-1">
+                        <x-admin.nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Overview</x-admin.nav-link>
+                        <x-admin.nav-link :href="route('admin.visitors.index')" :active="request()->routeIs('admin.visitors.*')">Visitor Directory</x-admin.nav-link>
+                        <x-admin.nav-link :href="route('visitor-registration.create', 'welcome-service')">Registration Form</x-admin.nav-link>
+                        <x-admin.nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports & Exports</x-admin.nav-link>
                     </nav>
 
                     <form method="POST" action="{{ route('logout') }}" class="mt-auto">
@@ -60,28 +60,29 @@
                 </aside>
             </div>
 
-            <aside class="hidden w-72 shrink-0 bg-[#08133f] px-5 py-6 text-white shadow-2xl shadow-[#08133f]/25 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
-                <a href="{{ route('admin.dashboard') }}" class="block rounded-3xl border border-white/10 bg-white/10 p-4 shadow-sm">
-                    <span class="flex h-20 items-center justify-center rounded-2xl bg-white p-2">
+            <aside class="hidden w-64 shrink-0 border-r border-white/10 bg-[#090f1f]/95 px-4 py-5 text-white shadow-2xl shadow-black/30 backdrop-blur lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
+                <a href="{{ route('admin.dashboard') }}" class="block rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                    <span class="flex h-14 items-center justify-center rounded-xl bg-white p-2">
                         <img src="{{ asset('images/CHlogo.png') }}" alt="Christ Embassy" class="max-h-full max-w-full object-contain">
                     </span>
                     <span class="mt-4 block">
                         <span class="block text-sm font-bold text-white">{{ $currentChurch->name ?? 'Church ERP' }}</span>
-                        <span class="block text-xs font-medium text-white/55">Visitor Management</span>
+                        <span class="block text-xs font-medium text-slate-400">Admin workspace</span>
                     </span>
                 </a>
 
-                <nav class="mt-8 space-y-1">
-                    <x-admin.nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard Home</x-admin.nav-link>
-                    <x-admin.nav-link :href="route('admin.visitors.index')" :active="request()->routeIs('admin.visitors.*')">Visitor List</x-admin.nav-link>
-                    <x-admin.nav-link :href="route('visitor-registration.create', 'welcome-service')">QR Registration</x-admin.nav-link>
-                    <x-admin.nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports</x-admin.nav-link>
+                <nav class="mt-6 space-y-1">
+                    <p class="px-3 pb-2 text-[0.68rem] font-bold uppercase tracking-[0.22em] text-slate-500">Main Menu</p>
+                    <x-admin.nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Overview</x-admin.nav-link>
+                    <x-admin.nav-link :href="route('admin.visitors.index')" :active="request()->routeIs('admin.visitors.*')">Visitor Directory</x-admin.nav-link>
+                    <x-admin.nav-link :href="route('visitor-registration.create', 'welcome-service')">Registration Form</x-admin.nav-link>
+                    <x-admin.nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">Reports & Exports</x-admin.nav-link>
                 </nav>
 
                 <div class="mt-auto space-y-4">
-                    <div class="rounded-3xl border border-white/10 bg-white/10 p-4">
+                    <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
                         <p class="text-sm font-bold text-white">{{ auth()->user()->name }}</p>
-                        <p class="mt-1 truncate text-xs text-white/55">{{ auth()->user()->email }}</p>
+                        <p class="mt-1 truncate text-xs text-slate-400">{{ auth()->user()->email }}</p>
                     </div>
 
                     <form method="POST" action="{{ route('logout') }}">
@@ -94,29 +95,29 @@
             </aside>
 
             <div class="min-w-0 flex-1">
-                <header class="sticky top-0 z-20 border-b border-white/70 bg-white/80 backdrop-blur-xl">
-                    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+                <header class="sticky top-0 z-20 border-b border-white/10 bg-[#070b16]/78 backdrop-blur-xl">
+                    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
                         <div class="min-w-0">
-                            <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#d29a18]">Admin</p>
-                            <h1 class="truncate text-xl font-extrabold tracking-tight text-[#162b75] sm:text-2xl">{{ $pageTitle ?? $title ?? 'Dashboard' }}</h1>
+                            <p class="text-xs font-bold uppercase tracking-[0.2em] text-[#f5b82e]">Admin</p>
+                            <h1 class="truncate text-lg font-bold tracking-tight text-white sm:text-xl">{{ $pageTitle ?? $title ?? 'Dashboard' }}</h1>
                             @isset($pageDescription)
-                                <p class="mt-1 hidden text-sm text-slate-500 sm:block">{{ $pageDescription }}</p>
+                                <p class="mt-1 hidden text-sm text-slate-400 sm:block">{{ $pageDescription }}</p>
                             @endisset
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <button type="button" data-admin-menu-open class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 shadow-sm lg:hidden">Menu</button>
-                            <a href="{{ route('admin.dashboard') }}" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 shadow-sm lg:hidden">Home</a>
-                            <a href="{{ route('admin.visitors.index') }}" class="rounded-xl bg-[#162b75] px-3 py-2 text-sm font-bold text-white shadow-sm lg:hidden">Visitors</a>
+                            <button type="button" data-admin-menu-open class="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-bold text-white shadow-sm lg:hidden">Menu</button>
+                            <a href="{{ route('admin.dashboard') }}" class="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-bold text-white shadow-sm lg:hidden">Overview</a>
+                            <a href="{{ route('admin.visitors.index') }}" class="rounded-xl bg-[#f5b82e] px-3 py-2 text-sm font-bold text-slate-950 shadow-sm lg:hidden">Visitors</a>
                             <form method="POST" action="{{ route('logout') }}" class="lg:hidden">
                                 @csrf
-                                <button type="submit" class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold text-slate-700 shadow-sm">Logout</button>
+                                <button type="submit" class="rounded-xl border border-white/10 bg-white/10 px-3 py-2 text-sm font-bold text-white shadow-sm">Logout</button>
                             </form>
                         </div>
                     </div>
                 </header>
 
-                <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <main class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
                     {{ $slot }}
                 </main>
             </div>

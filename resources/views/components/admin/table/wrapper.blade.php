@@ -1,6 +1,6 @@
-<div {{ $attributes->merge(['class' => 'overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/95 shadow-xl shadow-slate-200/80 ring-1 ring-slate-900/5']) }}>
+<div {{ $attributes->merge(['class' => 'overflow-hidden rounded-2xl border border-white/10 bg-white/[0.045] shadow-xl shadow-black/20 ring-1 ring-white/[0.03]']) }}>
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-slate-200">
+        <table class="min-w-full divide-y divide-white/10">
             {{ $slot }}
         </table>
     </div>

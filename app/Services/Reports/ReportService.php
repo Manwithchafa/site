@@ -6,6 +6,7 @@ use App\Models\Visitor;
 use App\Models\VisitorRegistration;
 use App\Models\FollowUp;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
@@ -29,24 +30,22 @@ class ReportService
             $query = VisitorRegistration::query()
                 ->whereBetween('created_at', [$startDt->startOfDay(), $endDt->endOfDay()]);
 
-            $groupFormat = match ($period) {
-                'daily' => 'YYYY-MM-DD',
-                'weekly' => 'IYYY-IW',
-                'monthly' => 'YYYY-MM',
-                'yearly' => 'YYYY',
-                default => 'YYYY-MM-DD',
+            $periodExpression = match (DB::connection()->getDriverName()) {
+                'pgsql' => match ($period) {
+                    'weekly' => "to_char(created_at, 'IYYY-IW')",
+                    'monthly' => "to_char(created_at, 'YYYY-MM')",
+                    'yearly' => "to_char(created_at, 'YYYY')",
+                    default => "to_char(created_at, 'YYYY-MM-DD')",
+                },
+                default => match ($period) {
+                    'weekly' => "strftime('%Y-%W', created_at)",
+                    'monthly' => "strftime('%Y-%m', created_at)",
+                    'yearly' => "strftime('%Y', created_at)",
+                    default => "strftime('%Y-%m-%d', created_at)",
+                },
             };
 
-            // Use PostgreSQL to_char format via to_char in selectRaw
-            $format = match ($period) {
-                'daily' => 'YYYY-MM-DD',
-                'weekly' => 'IYYY-IW',
-                'monthly' => 'YYYY-MM',
-                'yearly' => 'YYYY',
-                default => 'YYYY-MM-DD',
-            };
-
-            $rows = $query->selectRaw("to_char(created_at, '{$format}') as period, count(*) as total")
+            $rows = $query->selectRaw("{$periodExpression} as period, count(*) as total")
                 ->groupBy('period')
                 ->orderBy('period')
                 ->get()
