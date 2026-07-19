@@ -96,7 +96,7 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
             'born_again_when' => '2021-01-01',
             'wants_membership' => true,
             'wants_counsel' => true,
-            'preferred_visit_date' => '2026-07-20',
+            'preferred_visit_date' => 'Monday evening or next week',
             'prayer_request' => 'Please pray for me.',
         ], '127.0.0.1', 'phpunit');
 
@@ -119,7 +119,7 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
         $this->assertSame('2021-01-01', $visitor->born_again_when->toDateString());
         $this->assertTrue($visitor->wants_membership);
         $this->assertTrue($visitor->wants_counsel);
-        $this->assertSame('2026-07-20', $visitor->preferred_visit_date->toDateString());
+        $this->assertSame('Monday evening or next week', $visitor->preferred_visit_date);
         $this->assertTrue($visitor->is_baptized);
     }
 
@@ -148,7 +148,7 @@ class VisitorRegistrationProfileFieldsTest extends TestCase
             'born_again_when' => '2021-01-01',
             'wants_membership' => true,
             'wants_counsel' => true,
-            'preferred_visit_date' => '2026-07-20',
+            'preferred_visit_date' => 'Tuesday after work',
             'is_baptized' => true,
             'prayer_request' => 'Please pray for me.',
         ], '127.0.0.1', 'phpunit-agent');

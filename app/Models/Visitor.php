@@ -45,7 +45,6 @@ class Visitor extends Model
             'date_of_birth' => 'date',
             'wedding_anniversary' => 'date',
             'born_again_when' => 'date',
-            'preferred_visit_date' => 'date',
             'born_again' => 'boolean',
             'is_baptized' => 'boolean',
             'wants_membership' => 'boolean',

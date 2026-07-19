@@ -32,7 +32,7 @@ return new class extends Migration
             $table->boolean('born_again')->default(false);
             $table->date('born_again_when')->nullable();
             $table->boolean('wants_counsel')->default(false);
-            $table->date('preferred_visit_date')->nullable();
+            $table->string('preferred_visit_date', 160)->nullable();
             $table->boolean('is_baptized')->default(false);
             $table->string('status')->default('new');
             $table->timestamps();

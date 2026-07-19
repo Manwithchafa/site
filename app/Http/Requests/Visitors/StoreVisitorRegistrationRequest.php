@@ -42,7 +42,7 @@ class StoreVisitorRegistrationRequest extends FormRequest
             'is_baptized' => ['boolean'],
             'wants_membership' => ['boolean'],
             'wants_counsel' => ['boolean'],
-            'preferred_visit_date' => ['nullable', 'date', 'after_or_equal:today'],
+            'preferred_visit_date' => ['nullable', 'string', 'max:160'],
             'prayer_request' => ['nullable', 'string', 'max:2000'],
         ];
     }
@@ -61,7 +61,6 @@ class StoreVisitorRegistrationRequest extends FormRequest
             'date_of_birth.before' => 'Date of birth must be before today.',
             'wedding_anniversary.before_or_equal' => 'Wedding anniversary must be today or earlier.',
             'born_again_when.before_or_equal' => 'The born again date must be today or earlier.',
-            'preferred_visit_date.after_or_equal' => 'Preferred visit date must be today or later.',
         ];
     }
 }

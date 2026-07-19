@@ -115,7 +115,7 @@
                         <option value="1">Yes</option>
                     </x-form.select>
 
-                    <x-form.input label="When can we visit you?" name="preferred_visit_date" wire:model="preferred_visit_date" type="date" />
+                    <x-form.input label="When can we visit you?" name="preferred_visit_date" wire:model="preferred_visit_date" placeholder="Monday evening, next week, after service..." />
                 </div>
 
                 <x-form.select label="Are you baptized?" name="is_baptized" wire:model="is_baptized">
@@ -162,4 +162,3 @@
         syncBornAgainWhen();
     });
 </script>
-

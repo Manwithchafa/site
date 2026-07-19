@@ -54,7 +54,7 @@ return new class extends Migration
             }
 
             if (! Schema::hasColumn('visitors', 'preferred_visit_date')) {
-                $table->date('preferred_visit_date')->nullable()->after('wants_counsel');
+                $table->string('preferred_visit_date', 160)->nullable()->after('wants_counsel');
             }
         });
     }
